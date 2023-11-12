@@ -302,7 +302,7 @@ def main():
                     times_up = int(static_current_time) + 15
                     print(str(times_up))
 
-                    
+
                     
                     while True:
                         success, img = cap.read()
@@ -325,17 +325,23 @@ def main():
                         print(str(times_up))
 
                         fingers = detector.fingersUp()
+                        balloonImage = cv2.imread(r"/home/dd/balloon.png")
+                        height, width, channels = balloonImage.shape
+                        offset = np.array((y_cord, x_cord))
+                        img[offset[0]:offset[0] + height, offset[1]:offset[1] + width] = balloonImage
                         
+                        moved_x_cord = x_cord + 10
+                        moved_y_cord = y_cord + 35
                     
-                        new_image_5 = cv2.putText(                           
-                            img = img,
-                            text = "X",
-                            org = (x_cord, y_cord),
-                            fontFace = cv2.FONT_HERSHEY_DUPLEX,
-                            fontScale = 1.1,
-                            color = (125, 246, 55),
-                            thickness = 3
-                        )
+#                         new_image_5 = cv2.putText(                           
+#                             img = img,
+#                             text = "X",
+#                             org = (moved_x_cord, moved_y_cord),
+#                             fontFace = cv2.FONT_HERSHEY_DUPLEX,
+#                             fontScale = 1.1,
+#                             color = (125, 246, 55),
+#                             thickness = 3
+#                         )
                         new_image = cv2.putText(                           
                             img = img,
                             text = "Score:" + str(score),
@@ -359,10 +365,10 @@ def main():
 
                         print(x_cord, y_cord)
                         
-                        x_cord_range = x_cord + 30
-                        x_cord_rangen = x_cord - 30
-                        y_cord_range = y_cord + 30
-                        y_cord_rangen = y_cord - 30
+                        x_cord_range = moved_x_cord + 40
+                        x_cord_rangen = moved_x_cord - 40
+                        y_cord_range = moved_y_cord + 40
+                        y_cord_rangen = moved_y_cord - 40
                         
 
                         if ((x_cord_range >= x1 >= x_cord_rangen) and (y_cord_range >= y1 >= y_cord_rangen)):
@@ -418,7 +424,8 @@ def main():
                                     thickness = 3
                                 )
                                 
-
+#                             if fingers[1] == 1 and fingers[0] == 0 and fingers[3] == 0 and fingers[2] == 1 and fingers[4] == 0 and selection == 0:
+                               
                                 
                             
                                 cv2.imshow("Image", img)
@@ -478,3 +485,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
